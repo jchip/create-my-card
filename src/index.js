@@ -107,7 +107,7 @@ function getInput() {
       return {};
     })
     .then(x => {
-      existUserPkg = x;
+      existUserPkg = (x.myCard && x) || {};
       existCardInfo = Object.assign({}, x.myCard && x.myCard.info);
       return prompt(questions);
     });
@@ -146,10 +146,12 @@ function createCard(answers) {
     .then(() => renameFile("_gitignore", ".gitignore"))
     .then(() => {
       console.log(`Your npm card is created in ${destDir}`);
-    })
-    .catch(err => {
-      console.log(err);
     });
 }
 
-getInput().then(createCard);
+getInput()
+  .then(createCard)
+  .catch(err => {
+    console.error("Failed creating your npm card\n");
+    console.error(err);
+  });
