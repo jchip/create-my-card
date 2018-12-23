@@ -146,7 +146,11 @@ function createCard(answers) {
     out = Path.join(destDir, out);
     return renderFile(filename, answers).then(str => {
       if (processor) str = processor(str);
-      return fs.writeFile(out, `${str}\n`);
+      return fs.writeFile(out, `${str}\n`).then(() => {
+        if (filename !== out) {
+          return fs.remove(filename);
+        }
+      });
     });
   };
 
