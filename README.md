@@ -24,7 +24,26 @@ npm install
 node src/card
 ```
 
+If you want to modify your card info and display, see [customizing](#customizing) for details.
+
+## GitHub Push
+
+To push your repo to your github account:
+
+- First create an empty repo on github with the same repo name.
+- Then run the following commands:
+
+```
+git init
+git add .
+git commit -m "first commit"
+git remote add origin git@github.com:<your-github-id>/<your-repo-name>.git
+git push --set-upstream origin master
+```
+
 ## Publish
+
+Your [npm] card package is published with a single JS bundle that's created with webpack so there's no dependencies.
 
 ### First Version
 
@@ -44,21 +63,21 @@ npm version patch
 npm publish
 ```
 
-Your [npm] card package is published with a single JS bundle that's created with webpack so there's no dependencies.
+### Push version commit and tag
 
-## GitHub Push
+After you update your package version and published to npm, you should push the version commit and tag.
 
-To push your repo to your github account:
-
-- First create an empty repo on github with the same repo name.
-- Then run the following commands:
+You can do it with:
 
 ```
-git init
-git add .
-git commit -m "first commit"
-git remote add origin git@github.com:<your-github-id>/<your-repo-name>.git
-git push --set-upstream origin master
+git push origin --tags :
+```
+
+Or two separate git pushes:
+
+```
+git push
+git push --tags
 ```
 
 ## Customizing
@@ -127,7 +146,7 @@ Scrolling down:
 
 ![Publish scroll down][publish-2]
 
-And profit, also remember to push version tag to github.
+And profit, also remember to push version tag & commit to github with `git push origin --tags :`
 
 ![npx][npx]
 
