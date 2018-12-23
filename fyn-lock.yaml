@@ -1351,6 +1351,7 @@ chalk:
  _:
   '^2.0.0,^2.4.1': 2.4.1
  2.4.1:
+  top: 1
   $: sha512-ObN6h1v2fTJSmUXoS3nMQ92LbDK9be4TV+6G+omQlGJFdcUX5heKi1LZ1YnRMIgwTLEj3E24bT6tYni50rlCfQ==
   _: 'https://registry.npmjs.org/chalk/-/chalk-2.4.1.tgz'
   dependencies:

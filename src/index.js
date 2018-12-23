@@ -5,6 +5,7 @@ const Path = require("path");
 const Inquirer = require("inquirer");
 const validatePackageName = require("validate-npm-package-name");
 const ejs = require("ejs");
+const chalk = require("chalk");
 
 function renderFile(filename, data, options) {
   return new Promise((resolve, reject) => {
@@ -16,6 +17,8 @@ function renderFile(filename, data, options) {
 }
 
 function getInput() {
+  let existUserPkg = {};
+  let existCardInfo = {};
   const prompt = Inquirer.createPromptModule();
 
   const questions = [
@@ -23,6 +26,7 @@ function getInput() {
       type: "input",
       name: "name",
       message: "Please enter your name:",
+      default: () => existCardInfo.name,
       validate: x => {
         if (x) return true;
         return "Must provide name for your card";
@@ -32,6 +36,7 @@ function getInput() {
       type: "input",
       name: "handle",
       message: "Please enter your handle:",
+      default: () => existCardInfo.handle,
       validate: x => {
         if (x) return true;
         return "Must provide handle for your card";
@@ -40,18 +45,19 @@ function getInput() {
     {
       type: "input",
       name: "work",
-      message: "Please enter your job title:"
+      message: "Please enter your job title:",
+      default: () => existCardInfo.work
     },
     {
       type: "input",
       name: "packageName",
       message: "Please enter npm package name for your card:",
-      default: answers => answers.handle,
+      default: answers => existCardInfo.handle || answers.handle,
       validate: x => {
         if (!x) return "Must provide package name for your card";
         const valid = validatePackageName(x);
-        if (!valid.validForNewPackages || !valid.validForOldPackages) {
-          return "Must provide a valid package name for your card";
+        if (!valid.validForNewPackages) {
+          return "Invalid package name: " + chalk.red(valid.errors[0]);
         }
         return true;
       }
@@ -66,33 +72,45 @@ function getInput() {
       type: "input",
       name: "npm",
       message: "Please enter your npm id:",
-      default: answers => answers.handle
+      default: answers => existCardInfo.npm || answers.handle
     },
     {
       type: "input",
       name: "github",
       message: "Please enter your GitHub id:",
-      default: answers => answers.handle
+      default: answers => existCardInfo.github || answers.handle
     },
     {
       type: "input",
       name: "twitter",
       message: "Please enter your Twitter id:",
-      default: answers => answers.handle
+      default: answers => existCardInfo.twitter || answers.handle
     },
     {
       type: "input",
       name: "linkedin",
       message: "Please enter your LinkedIn id:",
-      default: answers => answers.handle
+      default: answers => existCardInfo.linkedin || answers.handle
     },
     {
       type: "input",
       name: "web",
-      message: "Please enter your homepage URL:"
+      message: "Please enter your homepage URL:",
+      default: () => existCardInfo.web
     }
   ];
-  return prompt(questions);
+
+  return fs
+    .readFile(Path.resolve("package.json"))
+    .then(JSON.parse)
+    .catch(err => {
+      return {};
+    })
+    .then(x => {
+      existUserPkg = x;
+      existCardInfo = Object.assign({}, x.myCard && x.myCard.info);
+      return prompt(questions);
+    });
 }
 
 function createCard(answers) {
