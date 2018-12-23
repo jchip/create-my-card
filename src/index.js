@@ -58,7 +58,10 @@ function getInput() {
         if (!x) return "Must provide package name for your card";
         const valid = validatePackageName(x);
         if (!valid.validForNewPackages) {
-          return "Invalid package name: " + chalk.red(valid.errors[0]);
+          return (
+            "Invalid package name: " +
+            chalk.red((valid.errors || valid.warnings || ["unknown error"])[0])
+          );
         }
         return true;
       }
