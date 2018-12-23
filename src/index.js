@@ -145,7 +145,7 @@ function createCard(answers) {
     out = out || filename;
     filename = Path.join(destDir, filename);
     out = Path.join(destDir, out);
-    return renderFile(filename, answers).then(str => {
+    return renderFile(filename, answers, { escape: x => x }).then(str => {
       if (processor) str = processor(str);
       return fs.writeFile(out, `${str}\n`).then(() => {
         if (filename !== out) {
