@@ -20,61 +20,64 @@ function showCard(pkg) {
 
   // get myCard info from package
   const myCard = pkg.myCard;
+  const info = myCard.info;
   const data = myCard.data;
-  const fields = Object.keys(data);
+
+  // replace {{token}} in string with info[token]
+  const processString = str => str.replace(/{{([^}]+)}}/g, (a, b) => info[b]);
 
   // find the longest label string and its corresponding URL
   // for later padding of spaces to do alignment
-  const maxLens = fields.reduce(
+  const maxLens = data.reduce(
     (a, x) => {
-      // ignore label for line if it starts with .
-      if (x.startsWith(".")) return a;
-      const value = removeColors(data[x]);
-      x = removeColors(x);
-      a.field = Math.max(a.field, x.length);
-      a.value = Math.max(a.value, value.length);
+      // if line is a literal string or has no label, skip
+      if (typeof x === "string" || !x.label) return a;
+      a.label = Math.max(a.label, removeColors(x.label).length);
+      a.text = Math.max(a.text, removeColors(x.text).length);
       return a;
     },
-    { field: 0, value: 0 }
+    { label: 0, text: 0 }
   );
 
-  const defaultLabel = cardStyle._default;
+  const defaultStyle = Object.assign({ label: x => x, text: x => x }, cardStyle._default);
 
-  // generate heading using name and handle
-  const heading = [cardStyle.title(formatColors(myCard.name), formatColors(myCard.handle))];
+  const cardText = data.reduce((a, x) => {
+    let line;
 
-  const cardText = heading.concat(
-    // add each label and corresponding URL
+    // line has when field and it's empty, so skip it
+    if (x.when && processString(x.when).trim() === "") {
+      return a;
+    }
 
-    fields.reduce((a, x) => {
+    // line has only text and no label, so take it as literal string
+    if (!x.label && x.text) {
+      x = x.text;
+    }
+
+    if (typeof x === "string") {
+      // process a string literal line directly
+      line = defaultStyle.text(formatColors(processString(x)));
+    } else {
+      // replace any info token in label and text
+      const xLabel = processString(x.label);
+      const xText = processString(x.text);
       // get label literal without any color markers
-      const label = removeColors(x);
-
+      const label = removeColors(xLabel);
       // get style for the label
       const style = Object.assign(
         {},
-        defaultLabel,
+        defaultStyle,
         cardStyle[label] || cardStyle[label.toLowerCase()]
       );
+      // add leading spaces for alignment
+      const pad = new Array(maxLens.label - label.length + 1).join(" ");
+      line = pad + style.label(formatColors(xLabel)) + style.text(formatColors(xText));
+    }
 
-      let pad = "";
-      let line;
+    a.push(line);
 
-      if (x.startsWith(".")) {
-        // ignore label for line if it starts with .
-        line = style.value(formatColors(data[x]));
-      } else {
-        // add leading spaces for alignment
-        pad = new Array(maxLens.field - label.length + 1).join(" ");
-        // generate the label and corresponding URL value
-        line = style.label(formatColors(x)) + style.value(formatColors(data[x]));
-      }
-
-      a.push(pad + line);
-
-      return a;
-    }, [])
-  );
+    return a;
+  }, []);
 
   // join all the text lines into a single string with newline
   const cardOuput = cardText.join("\n");

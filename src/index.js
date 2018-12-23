@@ -113,7 +113,7 @@ function createCard(answers) {
     filename = Path.join(destDir, filename);
     return renderFile(filename, answers).then(str => {
       if (processor) str = processor(str);
-      return fs.writeFile(filename, str);
+      return fs.writeFile(filename, `${str}\n`);
     });
   };
 

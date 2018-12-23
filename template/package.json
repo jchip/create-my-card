@@ -40,19 +40,54 @@
     "webpack-cli": "^3.1.2"
   },
   "myCard": {
-    "name": "          <%= name %>",
-    "handle": "<green> / </><%= handle %>",
-    "data": {
-      ".empty-line-100": "",
-      "<blue>Work</>": "<%= work %>",
-      ".empty-line-200": "",
-      <% if (twitter) { %>"Twitter": "https://twitter.com/<cyan><%= twitter %></>",<% } %>
-      <% if (npm) { %>"npm": "https://www.npmjs.com/<red>~<%= npm %></>",<% } %>
-      <% if (github) { %>"GitHub": "https://github.com/<green><%= github %></>",<% } %>
-      <% if (linkedin) { %>"LinkedIn": "https://www.linkedin.com/in/<blue><%= linkedin %></>",<% } %>
-      <% if (web) { %>"Web": "<cyan><%= web %></>",<% } %>
-      ".empty-line-300": "",
-      "Card": "<red>npx</> <%= packageName %>"
-    }
+    "info": {
+      "name": "<%= name %>",
+      "handle": "<%= handle %>",
+      <% if (twitter) { %>"twitter": "<%= twitter %>",<% } %>
+      <% if (npm) { %>"npm": "<%= npm %>",<% } %>
+      <% if (github) { %>"github": "<%= github %>",<% } %>
+      <% if (linkedin) { %>"linkedin": "<%= linkedin %>",<% } %>
+      <% if (web) { %>"web": "<%= web %>",<% } %>
+      "work": "<%= work %>"
+    },
+    "data": [
+      "          <white>{{name}}</><green> / </><cyan>{{handle}}</>",
+      "",
+      {
+        "label": "<blue>Work</>",
+        "text": "{{work}}"
+      },
+      "",
+      {
+        "label": "Twitter",
+        "text": "https://twitter.com/<cyan>{{twitter}}</>",
+        "when": "{{twitter}}"
+      },
+      {
+        "label": "npm",
+        "text": "https://www.npmjs.com/<red>~{{npm}}</>",
+        "when": "{{npm}}"
+      },
+      {
+        "label": "GitHub",
+        "text": "https://github.com/<green>{{github}}</>",
+        "when": "{{github}}"
+      },
+      {
+        "label": "LinkedIn",
+        "text": "https://www.linkedin.com/in/<blue>{{linkedin}}</>",
+        "when": "{{linkedin}}"
+      },
+      {
+        "label": "Web",
+        "text": "<cyan>{{web}}</>",
+        "when": "{{web}}"
+      },
+      "",
+      {
+        "label": "Card",
+        "text": "<red>npx</> <%= packageName %>"
+      }
+    ]
   }
 }
