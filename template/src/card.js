@@ -32,7 +32,7 @@ function showCard(pkg) {
   const maxLens = data.reduce(
     (a, x) => {
       // if line is a literal string or has no label, skip
-      if (typeof x === "string" || !x.label) return a;
+      if (typeof x === "string" || !x.hasOwnProperty("label")) return a;
       a.label = Math.max(a.label, removeColors(x.label).length);
       a.text = Math.max(a.text, removeColors(x.text).length);
       return a;
@@ -51,8 +51,8 @@ function showCard(pkg) {
     }
 
     // line has only text and no label, so take it as literal string
-    if (!x.label && x.text) {
-      x = x.text;
+    if (!x.hasOwnProperty("label") && x.hasOwnProperty("text")) {
+      x = x.text || "";
     }
 
     if (typeof x === "string") {
@@ -71,7 +71,9 @@ function showCard(pkg) {
         cardStyle[label] || cardStyle[label.toLowerCase()]
       );
       // add leading spaces for alignment
-      const pad = new Array(maxLens.label - label.length + 1).join(" ");
+      const pad = x.hasOwnProperty("pad")
+        ? x.pad
+        : new Array(maxLens.label - label.length + 1).join(" ");
       line = pad + style.label(formatColors(xLabel)) + style.text(formatColors(xText));
     }
 

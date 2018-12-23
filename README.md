@@ -103,9 +103,15 @@ Each line can be a string or an object.
 
 Where:
 
-- `label` The label for the line. If this is missing, then only `text` is used to render the line.
+- `label` The label for the line.
+  - If this is missing, then only `text` is used to render the line.
+  - If it's an empty string, `""`, then no label but `text` is aligned with `text` of other lines.
 - `text` The text for the line.
 - `when` Turn off displaying the line if it process to an empty string `""`.
+
+Optionals:
+
+- `pad` The built-in renderer automatically add enough spaces to align all labels on the right. You can provide your own `pad` string override for each line.
 
 ### String colors and tokens
 
@@ -117,6 +123,10 @@ Any string in the data lines can contain color markers or tokens.
   - Closing marker can be simply `</>`
 
 - Tokens has the `{{github}}` format. The token string reference what's in `myCard.info`.
+
+### Roll your own renderer
+
+If you prefer to implement your own JavaScript renderer, you can replace the code in the `src` directory. Put your code in the main file `card.js` and you can utilize the webpack bundling logic to publish your card without dependencies.
 
 # Demo
 

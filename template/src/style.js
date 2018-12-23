@@ -13,7 +13,7 @@ module.exports = {
   },
   // any label without a style defined will use this
   _default: {
-    label: x => chalk.white.bold(x + ": "),
+    label: x => (x && chalk.white.bold(x + ": ")) || "  ",
     text: x => chalk.gray(x)
   },
   // options for boxen

@@ -140,11 +140,13 @@ function createCard(answers) {
     destDir = Path.resolve(answers.repoName);
   }
 
-  const processFile = (filename, processor) => {
+  const processFile = (filename, out, processor) => {
+    out = out || filename;
     filename = Path.join(destDir, filename);
+    out = Path.join(destDir, out);
     return renderFile(filename, answers).then(str => {
       if (processor) str = processor(str);
-      return fs.writeFile(filename, `${str}\n`);
+      return fs.writeFile(out, `${str}\n`);
     });
   };
 
@@ -162,7 +164,7 @@ function createCard(answers) {
     .copy(tmplDir, destDir)
     .then(() => processFile("README.md"))
     .then(() => {
-      return processFile("package.json", str => {
+      return processFile("_package.json", "package.json", str => {
         const newPkg = JSON.parse(str);
         transferExistPkg(existUserPkg, newPkg, [
           "name",
