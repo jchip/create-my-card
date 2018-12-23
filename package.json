@@ -1,0 +1,37 @@
+{
+  "name": "create-my-card",
+  "version": "0.0.4",
+  "description": "npm init your personal npx card",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jchip/create-my-card.git"
+  },
+  "scripts": {},
+  "bin": {
+    "create-my-card": "bin/create-my-card.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "template"
+  ],
+  "keywords": [
+    "init",
+    "card",
+    "npm",
+    "npm card",
+    "npx",
+    "npx card",
+    "business card"
+  ],
+  "author": "Joel Chen",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "fs-extra": "^7.0.1",
+    "inquirer": "^6.2.1",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}

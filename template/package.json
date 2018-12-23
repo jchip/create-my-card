@@ -1,0 +1,58 @@
+{
+  "name": "<%= packageName %>",
+  "version": "1.0.0",
+  "description": "Peronal npm card for <%= name %> (@<%= handle %>)",
+  "main": "bin/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<%= github %>/<%= repoName %>.git"
+  },
+  "scripts": {
+    "prepublishOnly": "webpack"
+  },
+  "bin": {
+    "<%= unscopePkgName %>": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "keywords": [
+    "card",
+    "npm",
+    "npm card",
+    "npx",
+    "npx card",
+    "business card"
+  ],
+  "author": "<%= name %>",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.4",
+    "boxen": "^2.1.0",
+    "chalk": "^2.4.1",
+    "lodash.get": "^4.4.2",
+    "webpack": "^4.28.1",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.1.2"
+  },
+  "myCard": {
+    "name": "          <%= name %>",
+    "handle": "<green> / </><%= handle %>",
+    "data": {
+      ".empty-line-100": "",
+      "<blue>Work</>": "<%= work %>",
+      ".empty-line-200": "",
+      <% if (twitter) { %>"Twitter": "https://twitter.com/<cyan><%= twitter %></>",<% } %>
+      <% if (npm) { %>"npm": "https://www.npmjs.com/<red>~<%= npm %></>",<% } %>
+      <% if (github) { %>"GitHub": "https://github.com/<green><%= github %></>",<% } %>
+      <% if (linkedin) { %>"LinkedIn": "https://www.linkedin.com/in/<blue><%= linkedin %></>",<% } %>
+      <% if (web) { %>"Web": "<cyan><%= web %></>",<% } %>
+      ".empty-line-300": "",
+      "Card": "<red>npx</> <%= packageName %>"
+    }
+  }
+}
