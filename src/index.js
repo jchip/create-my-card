@@ -77,6 +77,7 @@ function getInput() {
           if (ix > 0) {
             return repo.substring(0, ix);
           }
+          return repo;
         }
         return Path.basename(answers.packageName);
       }
