@@ -91,6 +91,12 @@ And profit:
 
 ![npx][npx]
 
+# License
+
+Copyright (c) 2018-present, Joel Chen
+
+Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
 ---
 
 [create-empty-repo]: ./images/new-repo.png
