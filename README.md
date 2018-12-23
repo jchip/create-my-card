@@ -28,12 +28,16 @@ node src/card
 
 ### First Version
 
+The very first time you publish your card, do a `npm version major` to bring your package version to `1.0.0`.
+
 ```
 npm version major
 npm publish
 ```
 
 ### Update Versions
+
+To publish patches to your card, do a `npm version patch`.
 
 ```
 npm version patch
