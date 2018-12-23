@@ -38,5 +38,13 @@ git init
 git add .
 git commit -m "first commit"
 git remote add origin git@github.com:<your-github-id>/<your-repo-name>.git
-git push -u origin master
+git push --set-upstream origin master
 ```
+
+# Demo
+
+## Creating
+
+![Init your card][init-your-card]
+
+[init-your-card]: ./images/demo1.png
