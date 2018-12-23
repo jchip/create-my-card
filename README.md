@@ -87,7 +87,7 @@ Scrolling down:
 
 ![Publish scroll down][publish-2]
 
-And profit:
+And profit, also remember to push version tag to github.
 
 ![npx][npx]
 
