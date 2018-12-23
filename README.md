@@ -2,7 +2,11 @@
 
 Allow you to create your personal npm card with `npm init my-card`.
 
+Your card's code is bundled into a single JS file with webpack so it has no dependencies.
+
 # Usage
+
+## Init
 
 ```
 npm init my-card
@@ -12,7 +16,7 @@ After answering the questions, it should create a new directory with the code to
 
 > If your current directory is already named the same as `<my-card-repo-name>`, then no new directory is created.
 
-To test:
+## Test
 
 ```
 cd <my-card-repo-name>
@@ -20,13 +24,25 @@ npm install
 node src/card
 ```
 
-To publish:
+## Publish
+
+### First Version
 
 ```
+npm version major
+npm publish
+```
+
+### Update Versions
+
+```
+npm version patch
 npm publish
 ```
 
 Your `npm` card package is published with a single JS bundle that's created with webpack so there's no dependencies.
+
+## GitHub Push
 
 To push your repo to your github account:
 

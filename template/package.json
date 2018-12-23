@@ -1,6 +1,6 @@
 {
   "name": "<%= packageName %>",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Peronal npm card for <%= name %> (@<%= handle %>)",
   "main": "bin/index.js",
   "repository": {
