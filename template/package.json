@@ -86,7 +86,7 @@
       "",
       {
         "label": "Card",
-        "text": "<red>npx</> <%= packageName %>"
+        "text": "<red>npx</> {{_packageName}}"
       }
     ]
   }

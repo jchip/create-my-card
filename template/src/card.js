@@ -10,6 +10,7 @@ const xrequire = eval(`require`);
 const boxen = require("boxen");
 const chalk = require("chalk");
 const formatColors = require("./format-colors");
+const get = require("lodash.get");
 
 const myPkg = xrequire("../package.json");
 const cardStyle = require("./style.js");
@@ -20,11 +21,11 @@ function showCard(pkg) {
 
   // get myCard info from package
   const myCard = pkg.myCard;
-  const info = myCard.info;
+  const info = Object.assign({ _packageName: pkg.name }, myCard.info);
   const data = myCard.data;
 
   // replace {{token}} in string with info[token]
-  const processString = str => str.replace(/{{([^}]+)}}/g, (a, b) => info[b]);
+  const processString = str => str.replace(/{{([^}]+)}}/g, (a, b) => get(info, b, ""));
 
   // find the longest label string and its corresponding URL
   // for later padding of spaces to do alignment
