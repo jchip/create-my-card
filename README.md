@@ -65,6 +65,8 @@ git push --set-upstream origin master
 
 ## Initializing Card
 
+> Demo using [fyn] to install dependencies.
+
 ![Initialize Card][init-your-card]
 
 ## Pushing to GitHub
@@ -106,3 +108,4 @@ Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses
 [publish-2]: ./images/publish-2.png
 [npx]: ./images/npx.png
 [npm]: https://www.npmjs.com/
+[fyn]: https://www.npmjs.com/package/fyn
