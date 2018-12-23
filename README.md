@@ -70,7 +70,9 @@ Your card info and data are saved to your `package.json` as `myCard`.
 
 Each line can be a string or an object.
 
-The object follow this format:
+- If it's a string, then it's used directly to render the line.
+
+- If it's an object, then it should follow this format:
 
 ```js
       {
@@ -82,9 +84,9 @@ The object follow this format:
 
 Where:
 
-- `label` The label for the line
-- `text` The text for the line
-- `when` Turn off displaying the line if it process to an empty string `""`
+- `label` The label for the line. If this is missing, then only `text` is used to render the line.
+- `text` The text for the line.
+- `when` Turn off displaying the line if it process to an empty string `""`.
 
 ### String colors and tokens
 
@@ -101,7 +103,7 @@ Any string in the data lines can contain color markers or tokens.
 
 ## Initializing Card
 
-> Demo using [fyn] to install dependencies.
+> Demo is using [fyn] to install dependencies.
 
 ![Initialize Card][init-your-card]
 
