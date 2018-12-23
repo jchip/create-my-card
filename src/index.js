@@ -16,8 +16,9 @@ function renderFile(filename, data, options) {
   });
 }
 
+let existUserPkg = {};
+
 function getInput() {
-  let existUserPkg = {};
   let existCardInfo = {};
   const prompt = Inquirer.createPromptModule();
 
@@ -52,7 +53,7 @@ function getInput() {
       type: "input",
       name: "packageName",
       message: "Please enter npm package name for your card:",
-      default: answers => existCardInfo.handle || answers.handle,
+      default: answers => existUserPkg.name || existCardInfo.handle || answers.handle,
       validate: x => {
         if (!x) return "Must provide package name for your card";
         const valid = validatePackageName(x);
@@ -66,7 +67,16 @@ function getInput() {
       type: "input",
       name: "repoName",
       message: "Please enter git repo name for your card:",
-      default: answers => Path.basename(answers.packageName)
+      default: answers => {
+        if (existUserPkg.repository && existUserPkg.repository.url) {
+          const repo = Path.basename(existUserPkg.repository.url);
+          const ix = repo.lastIndexOf(".git");
+          if (ix > 0) {
+            return repo.substring(0, ix);
+          }
+        }
+        return Path.basename(answers.packageName);
+      }
     },
     {
       type: "input",
@@ -139,10 +149,28 @@ function createCard(answers) {
     return fs.rename(Path.join(destDir, from), Path.join(destDir, to));
   };
 
+  const transferExistPkg = (existPkg, newPkg, fields) => {
+    fields.forEach(x => {
+      if (existPkg.hasOwnProperty(x)) newPkg[x] = existPkg[x];
+    });
+  };
+
   return fs
     .copy(tmplDir, destDir)
     .then(() => processFile("README.md"))
-    .then(() => processFile("package.json", str => JSON.stringify(JSON.parse(str), null, 2)))
+    .then(() => {
+      return processFile("package.json", str => {
+        const newPkg = JSON.parse(str);
+        transferExistPkg(existUserPkg, newPkg, [
+          "name",
+          "version",
+          "author",
+          "license",
+          "description"
+        ]);
+        return JSON.stringify(newPkg, null, 2);
+      });
+    })
     .then(() => renameFile("_gitignore", ".gitignore"))
     .then(() => {
       console.log(`Your npm card is created in ${destDir}`);
