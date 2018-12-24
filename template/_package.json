@@ -2,12 +2,13 @@
   "name": "<%= packageName %>",
   "version": "0.0.1",
   "description": "Personal npm card for <%= name %> (@<%= handle %>)",
-  "main": "bin/index.js",
+  "main": "index.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= github %>/<%= repoName %>.git"
   },
   "scripts": {
+    "prepare": "node src/htmlify",
     "prepublishOnly": "webpack"
   },
   "bin": {
@@ -15,7 +16,8 @@
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "index.html"
   ],
   "keywords": [
     "card",
@@ -31,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "ansi-to-html": "^0.6.9",
     "babel-loader": "^8.0.4",
     "boxen": "^2.1.0",
     "chalk": "^2.4.1",

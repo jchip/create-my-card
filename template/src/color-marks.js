@@ -11,10 +11,18 @@ const chalk = require("chalk");
 // - chalk.red is called for "<red>"
 // - chalk.blue.bold is called for "<blue.bold>"
 //
-function formatColors(s) {
+function format(s) {
   return s.replace(/<([a-z.]+)>([^<]+)($|<\/[^>]*>)/g, (a, b, c) => {
     return get(chalk, b)(c);
   });
 }
 
-module.exports = formatColors;
+// remove the color marker like <red>text</> from strings
+function remove(s) {
+  return s.replace(/<[^>]*>/g, "").trim();
+}
+
+module.exports = {
+  format,
+  remove
+};
