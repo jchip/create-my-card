@@ -4,6 +4,10 @@ Allow you to create your personal [npm] card started by [Tierney (@bitandbang)] 
 
 Your card's code is bundled into a single JS file with webpack so it has no dependencies.
 
+A static HTML version of your card is also generated in `index.html`. You can see it with [unpkg].
+
+ie: <https://unpkg.com/jchip>
+
 # Usage
 
 ## Init
@@ -115,12 +119,13 @@ Optionals:
 
 ### String colors and tokens
 
-Any string in the data lines can contain color markers or tokens.
+Any string in the data lines can contain color markers enabled by [chalker] or tokens.
 
 - Color markers has the `<red>red text</red>` format. You can use any valid methods [chalk] supports.
 
   - For example, `<blue.bold>blue bold text</blue.bold>` will colorize `blue bold text` with `chalk.blue.bold`.
   - Closing marker can be simply `</>`
+  - See [chalker] for more info on color markers.
 
 - Tokens has the `{{github}}` format. The token string reference what's in `myCard.info`.
 
@@ -178,3 +183,6 @@ Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses
 [fyn]: https://www.npmjs.com/package/fyn
 [tierney (@bitandbang)]: https://www.npmjs.com/package/bitandbang
 [chalk]: https://www.npmjs.com/package/chalk
+[chalk advanced colors]: https://github.com/chalk/chalk#256-and-truecolor-color-support
+[unpkg]: https://unpkg.com
+[chalker]: https://www.npmjs.com/package/chalker
