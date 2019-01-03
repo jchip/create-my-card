@@ -2,14 +2,15 @@
   "name": "<%= packageName %>",
   "version": "0.0.1",
   "description": "Personal npm card for <%= name %> (@<%= handle %>)",
-  "main": "index.html",
+  "main": "dist/card.js",
+  "unpkg": "index.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/<%= github %>/<%= repoName %>.git"
   },
   "scripts": {
     "prepare": "node src/htmlify",
-    "prepublishOnly": "webpack"
+    "prepublishOnly": "rm -rf dist && webpack"
   },
   "bin": {
     "<%= unscopePkgName %>": "bin/index.js"
