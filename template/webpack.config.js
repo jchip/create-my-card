@@ -10,14 +10,21 @@ const base = {
   entry: {
     "card.js": Path.resolve("src/card.js")
   },
-  plugins: [
-    process.env.ANALYZE_BUNDLE && new BundleAnalyzerPlugin()
-  ].filter(x => x),
+  plugins: [process.env.ANALYZE_BUNDLE && new BundleAnalyzerPlugin()].filter(x => x),
   resolve: {
     symlinks: false, // don't resolve symlinks to their real path
     alias: {
       "term-size": Path.resolve("stubs/term-size.js")
     }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: x => x.indexOf("node_modules") > 0,
+        use: "babel-loader"
+      }
+    ]
   },
   output: {
     filename: `[name]`,
@@ -31,21 +38,4 @@ const base = {
   }
 };
 
-const node6 = Object.assign({}, base, {
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: x => x.indexOf("node_modules") > 0,
-        use: "babel-loader"
-      }
-    ]
-  },
-  output: {
-    filename: `node6-[name]`,
-    path: Path.resolve("dist"),
-    libraryTarget: "commonjs2"
-  }
-});
-
-module.exports = [base, node6];
+module.exports = base;
