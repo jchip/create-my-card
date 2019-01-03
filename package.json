@@ -1,6 +1,6 @@
 {
   "name": "create-my-card",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "npm init your personal npx card",
   "main": "index.js",
   "repository": {
